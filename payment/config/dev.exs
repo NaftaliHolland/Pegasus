@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :payment, Payment.Repo,
   username: "postgres",
-  password: "postgres",
+  password: System.get_env("POSTGRES"),
   hostname: "localhost",
   database: "payment_dev",
   stacktrace: true,
