@@ -4,6 +4,7 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 import os
+import json
 
 app = Flask(__name__)
 
@@ -20,9 +21,6 @@ def verify(request):
 
     if mode and token:
         if mode == "subscribe" and token == WEBHOOK_VERIFY_TOKEN:
-            print(mode)
-            print(token)
-            print(challenge)
             print("Verified")
             return challenge, 200
         else:
@@ -33,10 +31,28 @@ def verify(request):
         return jsonify({"status": "error", "message": "Verifcation failed"}), 400
 
 def handle_message(request):
-    # parse request in json
+    """ parse request in json """
     body = request.get_json()
-    print("requst body: {}".format(body))
+    message_body = body["entry"][0]["changes"][0]["value"]["messages"][0]["text"]["body"]
+    is_valid = check_message_body(message_body)
+    print ("Valid message") if is_valid else print("Not valid")
+
+    #print("request body: {}".format(body))
+
+    #body_object = json.loads(body)
+
+    #print(body_object)
     return jsonify({"status": "ok"}), 200
+
+def check_message_body(message_body):
+    """ Checks the type of response user sends
+        and sends valid response
+    """
+    try:
+        amount = int(message_body)
+        return True
+    except:
+        return False
 
 @app.route("/")
 def hello_world():
