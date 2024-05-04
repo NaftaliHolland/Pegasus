@@ -67,14 +67,13 @@ def handle_message(request):
         message_body = body["entry"][0]["changes"][0]["value"]["messages"][0]["text"]["body"]
 
         is_valid = check_message_body(message_body)
-        print ("Valid message") if is_valid else print("Not valid")
-        send_message(message_body)
+        if not is_valid:
+            print("Not valid")
+            send_message("The amount must be a number between 5 and 1000")
+        else:
+            print ("Valid message")
+            send_message("Still working on that \U0001f600, you'll get that stk push soon")
 
-    #print("request body: {}".format(body))
-
-    #body_object = json.loads(body)
-
-    #print(body_object)
     return jsonify({"status": "ok"}), 200
 
 def check_message_body(message_body):
