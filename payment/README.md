@@ -21,3 +21,20 @@ also sdk push to our paybill
 ```
 authkey --> sdk push --> c2b
 
+done with the auth key
+
+## the sdk push configuration 
+    note this is just a thought process
+
+    ```
+
+    Api shall take the following data
+    1. the buy for -> these is the number of the person you want to buy credit for
+    2. pay_from -> the number that will receive the stk pin 
+    3. amount
+
+    if the number if same as the one making payment 
+    we will the same as 1 and 2
+```
+
+http://localhost:4000/v1/payment
