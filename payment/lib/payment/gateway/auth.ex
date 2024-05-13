@@ -7,9 +7,10 @@ defmodule Payment.Gateway.Auth do
   plug Tesla.Middleware.Headers, [{"authorization", "Basic #{System.get_env("AUTH_KEY")}"}]
   plug Tesla.Middleware.JSON
 
-  @spec get_auth_key :: %{}
+  @spec get_auth_key :: String.t()
   def get_auth_key do
     {:ok, body} = get("")
-    body.body
+    %{"access_token" => token} = body.body
+    token
   end
 end
