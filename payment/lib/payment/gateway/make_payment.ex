@@ -3,8 +3,8 @@ defmodule Payment.Gateway.MakePayment do
 
   use Tesla
 
-  plug Tesla.Middleware.BaseUrl, "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest" 
-  plug Tesla.Middleware.Headers, [{"authorization", "Bearer #{Auth.get_auth_key()}"}]
+  #plug Tesla.Middleware.BaseUrl, "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest" 
+  plug Tesla.Middleware.Headers, [{"Authorization", "Basic #{Auth.get_auth_key()}"}]
   plug Tesla.Middleware.JSON
 
   @spec password :: String.t()
@@ -43,7 +43,7 @@ defmodule Payment.Gateway.MakePayment do
       TransactionDesc: "Test"
     }
 
-    post("/", payment_details)
+    post("https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest", payment_details)
   end
 
   
