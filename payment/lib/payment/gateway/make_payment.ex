@@ -4,7 +4,7 @@ defmodule Payment.Gateway.MakePayment do
   use Tesla
 
   #plug Tesla.Middleware.BaseUrl, "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest" 
-  plug Tesla.Middleware.Headers, [{"Authorization", "Basic #{Auth.get_auth_key()}"}]
+  plug Tesla.Middleware.Headers, [{"Authorization", "Bearer #{Auth.get_auth_key()}"}]
   plug Tesla.Middleware.JSON
 
   @spec password :: String.t()
@@ -19,13 +19,18 @@ defmodule Payment.Gateway.MakePayment do
   end
 
   def date_format do
-    DateTime.utc_now()
+    {:ok, datetime} =  DateTime.now("Africa/Nairobi")
+    [head, _tail] =
+    datetime
     |> DateTime.to_string()
     |> String.replace("-", "")
     |> String.replace(" ", "")
     |> String.replace(":", "")
-    |> String.replace(".", "")
-    |> String.replace("Z", "")
+    |> String.replace("#DateTime<", "")
+    |> String.split(".")
+    
+  head
+
   end
 
   def pay(buy_for, pay_from, amount) do
