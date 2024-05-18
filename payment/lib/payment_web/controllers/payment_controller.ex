@@ -4,10 +4,11 @@ defmodule PaymentWeb.PaymentController do
 
   def create(conn, params) do
     %{"buy_for" => buy_for, "pay_from" => pay_from, "amount" => amount} = params
-    response = MakePayment.pay(buy_for, pay_from, amount)
+    {:ok, body} = MakePayment.pay(buy_for, pay_from, amount)
 
-    IO.inspect(response)
+    IO.inspect(body)
     conn
     |> put_status(200)
+    
   end
 end
