@@ -24,7 +24,11 @@ defmodule PaymentWeb.Router do
     pipe_through :api
 
     post "/payment", PaymentController, :create
+
+    post "callback/payment", PaymentController, :callback
   end
+
+  
 
   # Other scopes may use custom stacks.
   # scope "/api", PaymentWeb do

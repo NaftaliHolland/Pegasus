@@ -10,6 +10,14 @@ defmodule PaymentWeb.PaymentController do
 
     conn
     |> send_resp(body.status, response)
-    |> put_status(200)
+  end
+
+  def callback(conn, params) do
+    IO.puts("this is the response callback")
+    IO.inspect(params)
+
+    conn
+    |> send_resp(200, "callback is working")
+
   end
 end

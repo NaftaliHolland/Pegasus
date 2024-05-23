@@ -44,7 +44,7 @@ defmodule Payment.Gateway.MakePayment do
       PartyA: buy_for,
       PartyB: 174_379,
       PhoneNumber: pay_from,
-      CallBackURL: "https://mydomain.com/pat",
+      CallBackURL: "https://cfbfe9bdc20d.ngrok.app/v1/callback/payment",
       AccountReference: "Test",
       TransactionDesc: "Test"
     }

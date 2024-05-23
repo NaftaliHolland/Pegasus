@@ -51,3 +51,10 @@ note there is no +
 ---
 working on the clear response from the api
 
+-- the call back url --
+we need a way to confirm the payment has been sent by using a call back url
+
+call back is a post api where after a function has been finished the server has to post the response through call back url
+
+http://localhost:4000/v1/callback/payment
+
