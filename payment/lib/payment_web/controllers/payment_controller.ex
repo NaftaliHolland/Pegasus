@@ -6,9 +6,18 @@ defmodule PaymentWeb.PaymentController do
     %{"buy_for" => buy_for, "pay_from" => pay_from, "amount" => amount} = params
     {:ok, body} = MakePayment.pay(buy_for, pay_from, amount)
 
-    IO.inspect(body)
+    {:ok, response} = Jason.encode(body.body)
+
     conn
-    |> put_status(200)
-    
+    |> send_resp(body.status, response)
+  end
+
+  def callback(conn, params) do
+    IO.puts("this is the response callback")
+    IO.inspect(params)
+
+    conn
+    |> send_resp(200, "callback is working")
+
   end
 end
