@@ -36,5 +36,18 @@ done with the auth key
     if the number if same as the one making payment 
     we will the same as 1 and 2
 ```
-
+make a post request to this
 http://localhost:4000/v1/payment
+note there is no +
+    ```
+    {
+        buy_for: 2541234434,
+        pay_from: 254232345,
+        amount: 2
+    }
+    ```
+
+23 may
+---
+working on the clear response from the api
+

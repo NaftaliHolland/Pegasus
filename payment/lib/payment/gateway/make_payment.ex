@@ -16,7 +16,7 @@ defmodule Payment.Gateway.MakePayment do
   def encode_data do
     #access_token = Auth.get_auth_key()
     access_token = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
-    "174379#{access_token}#{date_format}"
+    "174379#{access_token}#{date_format()}"
   end
 
   def date_format do
