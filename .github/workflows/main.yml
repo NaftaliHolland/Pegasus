@@ -21,6 +21,6 @@ jobs:
     - name: deploying to server
       uses: actions/checkout@main
     - name: dockerize  
-      working-directory: /payments
+      working-directory: /payment
       run: docker compose up
           
