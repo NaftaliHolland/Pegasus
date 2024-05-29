@@ -14,15 +14,11 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.PRIVATE_KEY }}
-        command_timeout: 30m
         script: | 
           cd /Pegasus/payment
           sudo docker build -t payment:v1 .
           sudo docker compose up
           echo "deployment successful wewewe..."
       
-    - name: deploying to server
-      uses: actions/checkout@main
-    - name: dockerize  
-      run: docker compose up
+   
           
