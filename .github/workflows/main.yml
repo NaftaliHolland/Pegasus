@@ -15,7 +15,8 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '${{ env.API_KEY }}'
+          workload_identity_provider: 'projects/78707103860/locations/global/workloadIdentityPools'
+          service_account: '${{secrets.service_account}}'
         
       - id: 'comput-ssh'
         uses: 'google-github-actions/ssh-compute@v1'
