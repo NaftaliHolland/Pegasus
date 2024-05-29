@@ -18,7 +18,7 @@ jobs:
           cd Pegasus/payment
           sudo docker build -t payment:v1 .
           sudo docker compose up
-          echo "deployment successful wewewe..."
+          echo "deployment successful wewewe.."
       
    
           
