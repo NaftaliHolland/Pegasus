@@ -16,7 +16,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         command_timeout: 30m
         script: | 
-          echo "login in to server successfully
+          echo "login in to server successfully"
     - name: deploying to server
       uses: actions/checkout@main
     - name: dockerize  
