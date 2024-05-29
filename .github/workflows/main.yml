@@ -18,4 +18,4 @@ jobs:
           instance_name: 'instance-20240528-100722'
           zone: 'us-central1-c'
           ssh_private_key: ${{secrets.key}}
-          commmand: 'echo hello world'
+          command: 'echo hello world'
