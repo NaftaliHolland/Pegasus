@@ -7,6 +7,26 @@
 # General application configuration
 import Config
 
+
+maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
+
+database_url =
+    System.get_env("HOSTNAME")
+
+database_ca_cert_filepath = System.get_env("DATABASE_CA_CERT_FILEPATH") || "/etc/ssl/certs/ca-certificates.crt"
+
+config :payment, Payment.Repo,
+  username: "MosesMuiru",
+  database: System.get_env("DATABASE_NAME"),
+  hostname: System.get_env("HOSTNAME"),
+  password: System.get_env("PASSWORD"),
+  ssl: true,
+  ssl_opts: [
+    server_name_indication: to_charlist(database_url),
+    verify: :verify_none
+  ]
+
+
 config :payment,
   ecto_repos: [Payment.Repo],
   generators: [timestamp_type: :utc_datetime]

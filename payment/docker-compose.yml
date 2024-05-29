@@ -1,0 +1,8 @@
+services:
+  payment:
+    env_file:
+      - .env
+    image: payment:v1
+    ports:
+      - "4000:4000" 
+

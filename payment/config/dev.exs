@@ -1,14 +1,13 @@
 import Config
 
 # Configure your database
-config :payment, Payment.Repo,
-  username: "postgres",
-  password: System.get_env("POSTGRES"),
-  hostname: "localhost",
-  database: "payment_dev",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+#  username: "postgres",
+#  password: System.get_env("POSTGRES"),
+#  hostname: "localhost",
+#  database: "payment_dev",
+#  stacktrace: true,
+#  show_sensitive_data_on_connection_error: true,
+#  pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

@@ -1,51 +1,101 @@
-FROM elixir:1.14-alpine as builder
+# Find eligible builder and runner images on Docker Hub. We use Ubuntu/Debian
+# instead of Alpine to avoid DNS resolution issues in production.
+#
+# https://hub.docker.com/r/hexpm/elixir/tags?page=1&name=ubuntu
+# https://hub.docker.com/_/ubuntu?tab=tags
+#
+# This file is based on these images:
+#
+#   - https://hub.docker.com/r/hexpm/elixir/tags - for the build image
+#   - https://hub.docker.com/_/debian?tab=tags&page=1&name=bullseye-20230202-slim - for the release image
+#   - https://pkgs.org/ - resource for finding needed packages
+#   - Ex: hexpm/elixir:1.14.2-erlang-25.2.3-debian-bullseye-20230202-slim
+#
+ARG ELIXIR_VERSION=1.14.2
+ARG OTP_VERSION=25.2.3
+ARG DEBIAN_VERSION=bullseye-20230202-slim
 
-# specify the dir
+ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
+ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
-WORKDIR /payments
+FROM ${BUILDER_IMAGE} as builder
 
-# this will include the hex package manager
-RUN mix local.hex --force && mix local.rebar --force
+# install build dependencies
+RUN apt-get update -y && apt-get install -y build-essential git \
+    && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
-RUN apk add git
+# prepare build dir
+WORKDIR /app
 
-# update -> alpine
-# postgresql-client -> we need to wait for the database to come online
-# inotify-tools -> reload when our code changes.
-#RUN apt-get update && apt-get install -y postgresql-client && apt-get install -y inotify-tools
+# install hex + rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
 
+# set build ENV
+ENV MIX_ENV="prod"
 
-COPY mix.exs .
+# install mix dependencies
+COPY mix.exs mix.lock ./
+RUN mix deps.get --only $MIX_ENV
+RUN mkdir config
 
-COPY mix.lock .
-# install dependecies
-RUN HEX_HTTP_CONCURRENCY=1 HEX_HTTP_TIMEOUT=1200 mix deps.get 
-RUN mix deps.get 
-
+# copy compile-time config files before we compile dependencies
+# to ensure any relevant config change will trigger the dependencies
+# to be re-compiled.
+COPY config/config.exs config/${MIX_ENV}.exs config/
 RUN mix deps.compile
-
-# COMPILE
-COPY config config/
-
-# lib
-COPY lib lib
 
 COPY priv priv
 
-# assets
+COPY lib lib
+
 COPY assets assets
 
 # compile assets
 RUN mix assets.deploy
 
-# compile the release
-#RUN mix compile
+COPY .env .env
 
+CMD ["source", ".env"]
 
+# Compile the release
+RUN mix compile
+
+# Changes to config/runtime.exs don't require recompiling the code
+COPY config/runtime.exs config/
+
+COPY rel rel
 RUN mix release
 
+# start a new build stage so that the final image will only contain
+# the compiled release and other runtime necessities
+FROM ${RUNNER_IMAGE}
 
+RUN apt-get update -y && \
+  apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates \
+  && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
-EXPOSE 4000
+# Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 
-CMD ["mix", "phx.server"]
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+WORKDIR "/app"
+RUN chown nobody /app
+
+# set runner ENV
+ENV MIX_ENV="prod"
+
+# Only copy the final release from the build stage
+COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/payment ./
+
+USER nobody
+
+# If using an environment that doesn't automatically reap zombie processes, it is
+# advised to add an init process such as tini via `apt-get install`
+# above and adding an entrypoint. See https://github.com/krallin/tini for details
+# ENTRYPOINT ["/tini", "--"]
+
+CMD ["/app/bin/server"]

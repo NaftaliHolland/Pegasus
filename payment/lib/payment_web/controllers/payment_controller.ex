@@ -18,6 +18,5 @@ defmodule PaymentWeb.PaymentController do
 
     conn
     |> send_resp(200, "callback is working")
-
   end
 end
