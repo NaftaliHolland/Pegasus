@@ -17,5 +17,5 @@ jobs:
         with: 
           instance_name: 'instance-20240528-100722'
           zone: 'us-central1-c'
-          ssh_private_key: '${{secrets.C_KEY}}'
+          ssh_private_key: '${{ secrets.C_KEY }}'
           command: 'echo hello world'
