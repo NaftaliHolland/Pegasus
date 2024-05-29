@@ -12,7 +12,7 @@ jobs:
     - name: print out example job
       uses: appleboy/ssh-action@v0.1.10
       with:
-        host: ${{ inputs.HOST }}
+        host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         command_timeout: 30m
