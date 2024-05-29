@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.CRED }}'
         
       - id: 'comput-ssh'
         uses: 'google-github-actions/ssh-compute@v1'
