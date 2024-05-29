@@ -17,8 +17,10 @@ jobs:
         command_timeout: 30m
         script: | 
           echo "login in to server successfully"
+      
     - name: deploying to server
       uses: actions/checkout@main
     - name: dockerize  
+      working-directory: /payments
       run: docker compose up
           
