@@ -17,5 +17,5 @@ jobs:
         with: 
           instance_name: 'instance-20240528-100722'
           zone: 'us-central1-c'
-          ssh_private_key: '${{ secrets.C_KEY }}'
+          ssh_private_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCrLqUtGEsRDk0JNsztogbPZ/tV96tklsj+SgupwUsSCFC9H8XhD5CenMPfFDd6iZvrCfdpC2M4UmRSxd+I/wN/Zd5Tb5gjNvyH6J8ikDwZ7go4zS23h8LZNCv2yoydkEwL+Tsiy+VZJ/A6sMUtyDE5VsxslLE/SPkOKJdc90BPiaAyAYY6lsgqZ7Jbw3CfQjhHRmxkaZY8Q63NixH4jbtiHIlWm3doZhKPLXbqcOjT3k+LsohKeVNmvZ7DJmEjzCMBvYMe3CtDQffF5e8wRuNKzlPUHADsD8/m1OKZtTe0LLD/8ZYmmFMXvaTKPvKN1chwGG/2+j2ipT5OxhkJiWEPevfJjuNciJZeIJK2Sl+DgXZ7iftaiNr5N8C3WYtvCxfxdNJClFAhxz8YXzkdXIsGbEXPqlSzh1uLmt+h0C63jZ82eqP22KBMAu6zkw273DvvI7Mx5dQ1OKTS4/zmr7HfpSKGHngauyqbkL8G1pfofE5lDerql5W1j9wbJyj0RL/f0/QgPylvM8VQSLwD8S9kGdCx/3tSrxzKe6r7fwjdYkQ/EgCi/pHSgwaqr6fjnJl2K508m0uAidOOTc6uqyAkhCSFYt1vVgWOz/yq96Pryg8xnF9diOvONARs/HskHWasRYH7lmaAxG6BYyGp6jBH/rX+Epz/uvef124aSsHhGQ== muirumoses9@gmail.com'
           command: 'echo hello world'
