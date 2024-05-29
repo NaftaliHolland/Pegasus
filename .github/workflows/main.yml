@@ -17,8 +17,9 @@ jobs:
         command_timeout: 30m
         script: | 
           cd /Pegasus/payment
-          docker compose up
-          echo "login in to server successfully"
+          sudo docker build -t payment:v1 .
+          sudo docker compose up
+          echo "deployment successful wewewe..."
       
     - name: deploying to server
       uses: actions/checkout@main
