@@ -15,13 +15,13 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '${{ secrets.CRED }}'
+          credentials_json: '${{ secrets.API_KEY }}'
         
       - id: 'comput-ssh'
         uses: 'google-github-actions/ssh-compute@v1'
         with: 
           instance_name: 'instance-20240528-100722'
           zone: 'us-central1-c'
-          ssh_private_key: '${{ secrets.C_KEY}}'
+          ssh_private_key: '${{ secrets.S_KEY}}'
           command: 'echo hello oooo'
           
