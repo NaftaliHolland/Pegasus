@@ -11,13 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: ssh into instance and deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          script: |
-            git pull origin main
-            docker-compose -f /path/to/docker-compose.yml up -d
+        
+      - id: 'comput-ssh'
+        uses: 'google-github-actions/ssh-compute@v1'
+        with: 
+          instance_name: 'instance-20240528-100722'
+          zone: 'us-central1-c'
+          ssh_private_key: ${{secrets.key}}
+          commmand: 'echo hello world'
