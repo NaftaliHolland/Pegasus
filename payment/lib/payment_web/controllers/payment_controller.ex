@@ -15,8 +15,10 @@ defmodule PaymentWeb.PaymentController do
   def callback(conn, params) do
     IO.puts("this is the response callback")
     IO.inspect(params)
+    {:ok, response} = Jason.encode(params["Body"]["stkCallback"])
+    IO.inspect(response)
 
     conn
-    |> send_resp(200, "callback is working")
+    |> send_resp(200, response)
   end
 end
