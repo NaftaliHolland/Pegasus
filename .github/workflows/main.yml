@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: print out example job
+    - name: print out example job  
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.HOST }}
@@ -19,7 +19,7 @@ jobs:
           git pull
           sudo docker build -t payment:v1 .
           sudo docker compose up -d
-          echo "deployment successful wewewe.."
+          echo "deployment successful wewewe..."
       
    
           
