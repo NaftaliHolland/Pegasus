@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: print out example job  
+    - name: Deployment 
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.HOST }}
