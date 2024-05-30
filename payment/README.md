@@ -16,8 +16,6 @@ also sdk push to our paybill
 
     i will update this further
 
-
-
 ```
 authkey --> sdk push --> c2b
 
