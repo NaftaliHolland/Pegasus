@@ -1,0 +1,24 @@
+name: Deploy to GCE
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: print out example job
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        script: | 
+          cd Pegasus/payment
+          sudo docker build -t payment:v1 .
+          sudo docker compose up -d
+          echo "deployment successful wewewe.."
+      
+   
+          
