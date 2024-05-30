@@ -16,6 +16,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         script: | 
           cd Pegasus/payment
+          git pull
           sudo docker build -t payment:v1 .
           sudo docker compose up -d
           echo "deployment successful wewewe.."
