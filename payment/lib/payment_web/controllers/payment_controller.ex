@@ -3,7 +3,7 @@ defmodule PaymentWeb.PaymentController do
   alias Payment.Gateway.MakePayment
 
   def create(conn, params) do
-    %{"buy_for" => buy_for, "pay_from" => pay_from, "amount" => amount} = params
+    %{"callback_url" => callback_url,"buy_for" => buy_for, "pay_from" => pay_from, "amount" => amount} = params
     {:ok, body} = MakePayment.pay(buy_for, pay_from, amount)
 
     {:ok, response} = Jason.encode(body.body)

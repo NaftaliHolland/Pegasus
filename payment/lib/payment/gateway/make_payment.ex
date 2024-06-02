@@ -34,7 +34,8 @@ defmodule Payment.Gateway.MakePayment do
     head
   end
 
-  def pay(buy_for, pay_from, amount) do
+  
+  def pay(callback_url, buy_for, pay_from, amount) do
     payment_details = %{
       BusinessShortCode: 174_379,
       Password: password(),
@@ -44,7 +45,7 @@ defmodule Payment.Gateway.MakePayment do
       PartyA: buy_for,
       PartyB: 174_379,
       PhoneNumber: pay_from,
-      CallBackURL: "https://afraid-birds-press.loca.lt/v1/callback/payment",
+      CallBackURL: callback_url,
       AccountReference: "Test",
       TransactionDesc: "Test"
     }
