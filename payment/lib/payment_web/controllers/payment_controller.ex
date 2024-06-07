@@ -3,7 +3,7 @@ defmodule PaymentWeb.PaymentController do
   alias Payment.Gateway.MakePayment
 
   def create(conn, params) do
-    %{"buy_for" => buy_for, "pay_from" => pay_from, "amount" => amount} = params
+    %{"callback_url" => callback_url,"buy_for" => buy_for, "pay_from" => pay_from, "amount" => amount} = params
     {:ok, body} = MakePayment.pay(buy_for, pay_from, amount)
 
     {:ok, response} = Jason.encode(body.body)
@@ -15,8 +15,10 @@ defmodule PaymentWeb.PaymentController do
   def callback(conn, params) do
     IO.puts("this is the response callback")
     IO.inspect(params)
+    {:ok, response} = Jason.encode(params["Body"]["stkCallback"])
+    IO.inspect(response)
 
     conn
-    |> send_resp(200, "callback is working")
+    |> send_resp(200, response)
   end
 end
