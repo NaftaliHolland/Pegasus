@@ -17,7 +17,7 @@ jobs:
         script: | 
           cd Pegasus/payment
           git pull
-          sudo docker compose up --build
+          sudo docker compose up -d --build
           echo "deployment successful wewewe..."
       
    
